@@ -7,7 +7,6 @@ import Navbar from 'components/navbar'
 const LandingPage = () => {
   return (
     <>
-      <Navbar />
       <Container maxWidth="md">
         <div>Testing</div>
       </Container>
