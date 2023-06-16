@@ -25,7 +25,7 @@ const CardContainer = styled('div')({
   flexDirection: 'column',
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#111111',
+  backgroundColor: '#7100b7a6',
   borderRadius: '10px',
   padding: '10px',
   margin: '10px',
@@ -37,16 +37,4 @@ const CardContainer = styled('div')({
   cursor: 'pointer',
   boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
   transition: 'all 0.2s ease-in-out',
-  '&:hover': {
-    transform: 'scale(1.1)',
-    boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
-  },
-  '&:active': {
-    transform: 'scale(1.05)',
-    boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
-  },
-  '&:focus': {
-    transform: 'scale(1.05)',
-    boxShadow: '0px 0px 10px 0px rgba(0,0,0,0.75)',
-  },
 })
