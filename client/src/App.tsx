@@ -8,6 +8,8 @@ import LandingPage from 'pages/landing-page'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
 import theme from 'theme'
+import RoomPage from 'pages/room-page'
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
@@ -17,6 +19,8 @@ function App() {
           <Wrapper>
             <Routes>
               <Route path="/" element={<LandingPage />} />
+              <Route path="/room/:id" element={<RoomPage />} />
+
               {/* other routes can go here */}
             </Routes>
           </Wrapper>
