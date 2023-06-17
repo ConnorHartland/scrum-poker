@@ -1,45 +1,41 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
-  id: string
   name: string
+  token: string
+  tokenExpiration: number // this is a timestamp
 }
 
-const initialState: UserState = {
-  id: '',
-  name: '',
-}
-
-export const fetchToken = createAsyncThunk(
-  'user/fetchToken',
-  async (name: string) => {
-    const response = await fetch('http://localhost:5000/api/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name }),
-    })
-    const data = await response.json()
-    return data
+// Function to load the initial state from localStorage
+const loadState = (): UserState => {
+  try {
+    const serializedState = localStorage.getItem('user')
+    if (serializedState === null) {
+      return { name: '', token: '', tokenExpiration: -1 }
+    }
+    return JSON.parse(serializedState)
+  } catch (err) {
+    return { name: '', token: '', tokenExpiration: -1 }
   }
-)
+}
+
+const initialState: UserState = loadState()
 
 export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUserName: (state, action) => {
-      state.name = action.payload
+    setUser: (state, action: PayloadAction<UserState>) => {
+      state.name = action.payload.name
+      state.token = action.payload.token
+      state.tokenExpiration = action.payload.tokenExpiration
+
+      // Save to localStorage whenever the state changes
+      localStorage.setItem('user', JSON.stringify(state))
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchToken.fulfilled, (state, action) => {
-      state.id = action.payload.id
-    })
   },
 })
 
-export const { setUserName } = userSlice.actions
+export const { setUser } = userSlice.actions
 
 export default userSlice.reducer

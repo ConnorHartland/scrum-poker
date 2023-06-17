@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
 import { Button, Paper, TextField, Typography } from '@mui/material'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { closeModal } from 'redux/features/modal/modalSlice'
-import { fetchToken, setUserName } from 'redux/features/user/userSlice'
+import { fetchToken, setUser, setUserName } from 'redux/features/user/userSlice'
 
 const CreateUserModal = () => {
   const dispatch = useDispatch()
   const [nameInput, setNameInput] = useState<string>('')
+  const user = useSelector((state: any) => state.user)
 
   const onHandleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNameInput(e.target.value)
@@ -23,6 +24,7 @@ const CreateUserModal = () => {
       })
       const data = await response.json()
       console.log(data)
+      dispatch(setUser(data))
       // Dispatch actions to store the user name and token in Redux
     } catch (error) {
       console.log(error)
