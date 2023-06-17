@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import { connectToDB } from './db'
 import dotenv from 'dotenv'
 
@@ -9,8 +9,12 @@ const PORT = process.env.PORT || 5000
 
 connectToDB()
 
-app.get('/', (req, res) => {
-  console.log(req.body)
+app.put('/', (req: Request, res: Response) => {
+  console.log(req.body.name)
+  res.send('Hello World!')
+})
+
+app.get('/', (req: Request, res: Response) => {
   res.send('Hello World!')
 })
 
