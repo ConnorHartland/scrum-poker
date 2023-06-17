@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose'
-import { UserDocument } from './user'
 import { TicketDocument } from './ticket'
+import { UserDocument } from './user'
 
 export interface RoomDocument extends Document {
   participants: UserDocument[]

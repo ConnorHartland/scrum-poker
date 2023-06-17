@@ -1,5 +1,5 @@
-import User, { UserDocument } from '../models/user'
 import { Request, Response } from 'express'
+import User, { UserDocument } from '../models/user'
 
 async function createUser(req: Request, res: Response) {
   try {
