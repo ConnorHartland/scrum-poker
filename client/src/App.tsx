@@ -1,12 +1,12 @@
+import { ThemeProvider } from '@emotion/react'
+import styled from '@emotion/styled'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import Navbar from 'components/navbar'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import LandingPage from 'pages/landing-page'
-import styled from '@emotion/styled'
-import { ThemeProvider } from '@emotion/react'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import theme from 'theme'
 
 function App() {

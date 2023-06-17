@@ -8,5 +8,20 @@
   "bracketSpacing": true,
   "arrowParens": "always",
   "endOfLine": "lf",
-  "jsxBracketSameLine": false
+  "jsxBracketSameLine": false,
+  "importOrder": [
+    "^react$",
+    "^react-dom$",
+    "^prop-types$",
+    "^@mui/(.*)$",
+    "^@reduxjs/toolkit$",
+    "^react-redux$",
+    "^redux(.*)$",
+    "^@react-query/(.*)$",
+    "^axios$",
+    "^lodash(.*)$",
+    "^@fortawesome/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSortSpecifiers": true
 }
