@@ -19,7 +19,7 @@ const createUser = async (req: Request, res: Response) => {
 
     if (!user) {
       // Create a new user if not found
-      const tokenExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
+      const tokenExpiration = new Date(Date.now() + 60) // 7 days from now
       user = new User({ name, token, tokenExpiration })
       await user.save()
     }

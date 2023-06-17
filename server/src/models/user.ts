@@ -8,7 +8,12 @@ export interface UserDocument extends Document {
 
 const userSchema = new Schema<UserDocument>({
   token: { type: String, required: true },
-  tokenExpiration: { type: Date, required: true },
+  tokenExpiration: {
+    type: Date,
+    required: true,
+    expires: 60 * 60 * 24 * 7,
+    index: true,
+  }, // 7 days
   name: { type: String, required: true },
 })
 

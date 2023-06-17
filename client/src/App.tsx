@@ -1,7 +1,6 @@
 import { ThemeProvider } from '@emotion/react'
 import styled from '@emotion/styled'
 
-import { Modal } from '@mui/material'
 import ModalRoot from 'components/modal/modal-root'
 import Navbar from 'components/navbar'
 import LandingPage from 'pages/landing-page'
@@ -17,7 +16,6 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(user)
     if (!user.token) {
       dispatch(openModal({ modalType: 'CREATE_USER' }))
     } else {
