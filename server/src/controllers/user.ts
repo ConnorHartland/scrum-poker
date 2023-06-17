@@ -1,25 +1,23 @@
 import { Request, Response } from 'express'
 import User, { UserDocument } from '../models/user'
+import jwt from 'jsonwebtoken'
 
 async function createUser(req: Request, res: Response) {
   try {
     const userData: UserDocument = req.body
-
-    if (!userData.id) {
-      return res.status(400).json({ error: 'Missing required fields: id' })
-    }
 
     if (!userData.name) {
       return res.status(400).json({ error: 'Missing required fields: name' })
     }
 
     // Check if a user with the same ID already exists
-    const existingUser = await User.findOne({ id: userData.id })
+    const token = jwt.sign({ id: userData.name }, process.env.JWT_SECRET!, {
+      expiresIn: '1h',
+    })
 
-    if (existingUser) {
-      return res.status(400).json({ error: 'User ID already exists' })
-    }
+    userData.id = token
 
+    console.log(userData)
     const user = new User(userData)
     await user.save()
 
