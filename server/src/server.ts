@@ -1,22 +1,20 @@
 import express, { Request, Response } from 'express'
 import { connectToDB } from './db'
 import dotenv from 'dotenv'
+import cors from 'cors'
+import userRouter from './routes/user'
 
 dotenv.config()
 
-const app = express()
+export const app = express()
 const PORT = process.env.PORT || 5000
 
 connectToDB()
 
-app.put('/', (req: Request, res: Response) => {
-  console.log(req.body.name)
-  res.send('Hello World!')
-})
+app.use(express.json())
+app.use(cors())
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!')
-})
+app.use('/api/users', userRouter)
 
 app.listen(PORT, () => {
   console.log(`Server is running in http://localhost:${PORT}`)

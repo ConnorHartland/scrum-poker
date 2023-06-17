@@ -8,6 +8,7 @@ import LandingPage from 'pages/landing-page'
 import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
 import theme from 'theme'
+
 function App() {
   return (
     <ThemeProvider theme={theme}>
