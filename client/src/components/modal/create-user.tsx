@@ -7,14 +7,11 @@ import { fetchToken, setUserName } from 'redux/features/user/userSlice'
 
 const CreateUserModal = () => {
   const dispatch = useDispatch()
-  const [name, setName] = useState<string>('')
+  const [nameInput, setNameInput] = useState<string>('')
 
   const onHandleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value)
-  }
-
-  const handleFetchToken = async (name: string) => {
-    // await dispatch(fetchToken(name))
+    setNameInput(e.target.value)
+    console.log(nameInput)
   }
 
   const createUser = async () => {
@@ -22,14 +19,11 @@ const CreateUserModal = () => {
       const response = await fetch('http://localhost:5000/api/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name }),
+        body: JSON.stringify({ name: nameInput }),
       })
       const data = await response.json()
       console.log(data)
       // Dispatch actions to store the user name and token in Redux
-      dispatch(setUserName(name))
-      handleFetchToken(name)
-      dispatch(closeModal()) // Close the modal after creating the user
     } catch (error) {
       console.log(error)
     }
@@ -38,7 +32,7 @@ const CreateUserModal = () => {
   return (
     <Wrapper elevation={3}>
       <Typography variant="h4">Please Enter your Name</Typography>
-      <TextField onChange={onHandleInput} value={name} />
+      <TextField onChange={onHandleInput} value={nameInput} />
       <Button variant="contained" onClick={createUser}>
         Create User
       </Button>

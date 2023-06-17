@@ -1,34 +1,37 @@
+import jwt from 'jsonwebtoken'
 import { Request, Response } from 'express'
 import User, { UserDocument } from '../models/user'
-import jwt from 'jsonwebtoken'
+import { generateToken } from '../utils/token'
 
-async function createUser(req: Request, res: Response) {
+// TODO: Add a function to create a user and not need an ID
+// TODO: User should be deleted from DB after 7 days of inactivity
+
+const createUser = async (req: Request, res: Response) => {
   try {
-    const userData: UserDocument = req.body
+    const { name } = req.body
+    console.log('name:', name)
 
-    if (!userData.name) {
-      return res.status(400).json({ error: 'Missing required fields: name' })
+    // Generate a token for the user
+    const token = generateToken()
+
+    // Check if the user already exists by token
+    let user = await User.findOne({ token })
+
+    if (!user) {
+      // Create a new user if not found
+      const tokenExpiration = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days from now
+      user = new User({ name, token, tokenExpiration })
+      await user.save()
     }
 
-    // Check if a user with the same ID already exists
-    const token = jwt.sign({ id: userData.name }, process.env.JWT_SECRET!, {
-      expiresIn: '1h',
+    res.status(200).json({
+      name: user.name,
+      token: user.token,
+      tokenExpiration: user.tokenExpiration,
     })
-
-    userData.id = token
-
-    console.log(userData)
-    const user = new User(userData)
-    await user.save()
-
-    // Send a response back to the client
-    return res.json({
-      message: 'User created successfully',
-      user: userData, // Replace this with the saved user document
-    })
-  } catch (e) {
-    console.error(e)
-    return res.status(400)
+  } catch (error) {
+    console.error('Failed to submit name:', error)
+    res.sendStatus(500)
   }
 }
 
