@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface UserState {
+  userId: string
   name: string
   token: string
   tokenExpiration: number // this is a timestamp
@@ -11,11 +12,11 @@ const loadState = (): UserState => {
   try {
     const serializedState = localStorage.getItem('user')
     if (serializedState === null) {
-      return { name: '', token: '', tokenExpiration: -1 }
+      return { userId: '', name: '', token: '', tokenExpiration: -1 }
     }
     return JSON.parse(serializedState)
   } catch (err) {
-    return { name: '', token: '', tokenExpiration: -1 }
+    return { userId: '', name: '', token: '', tokenExpiration: -1 }
   }
 }
 
@@ -26,6 +27,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<UserState>) => {
+      state.userId = action.payload.userId
       state.name = action.payload.name
       state.token = action.payload.token
       state.tokenExpiration = action.payload.tokenExpiration

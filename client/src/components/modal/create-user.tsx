@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { Button, Paper, TextField, Typography } from '@mui/material'
+import { BASE_URL } from 'config'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { closeModal } from 'redux/features/modal/modalSlice'
-import { fetchToken, setUser, setUserName } from 'redux/features/user/userSlice'
+import { setUser } from 'redux/features/user/userSlice'
 
 const CreateUserModal = () => {
   const dispatch = useDispatch()
@@ -17,13 +18,12 @@ const CreateUserModal = () => {
 
   const createUser = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch(`${BASE_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: nameInput }),
       })
       const data = await response.json()
-      console.log(data)
       dispatch(setUser(data))
       // Dispatch actions to store the user name and token in Redux
     } catch (error) {
