@@ -1,6 +1,6 @@
-import { AppBar, Toolbar, Typography } from '@mui/material'
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
+import { AppBar, Toolbar, Typography } from '@mui/material'
 
 export const Navbar = () => {
   return (

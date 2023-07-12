@@ -1,5 +1,5 @@
-import { Button, Container, Paper, Typography } from '@mui/material'
 import styled from '@emotion/styled'
+import { Button, Container, Paper, Typography } from '@mui/material'
 
 const LandingPage = () => {
   return (

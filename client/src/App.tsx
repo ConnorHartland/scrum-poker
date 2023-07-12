@@ -1,19 +1,34 @@
-import '@fontsource/roboto/300.css'
-import '@fontsource/roboto/400.css'
-import '@fontsource/roboto/500.css'
-import '@fontsource/roboto/700.css'
-import Navbar from 'components/navbar'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import LandingPage from 'pages/landing-page'
-import styled from '@emotion/styled'
 import { ThemeProvider } from '@emotion/react'
+import styled from '@emotion/styled'
+
+import ModalRoot from 'components/modal/modal-root'
+import Navbar from 'components/navbar'
+import LandingPage from 'pages/landing-page'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { closeModal, openModal } from 'redux/features/modal/modalSlice'
+import { UserState } from 'redux/features/user/userSlice'
 import theme from 'theme'
+
 function App() {
+  const user = useSelector((state: { user: UserState }) => state.user)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!user.token) {
+      dispatch(openModal({ modalType: 'CREATE_USER' }))
+    } else {
+      dispatch(closeModal())
+    }
+  }, [user])
+
   return (
     <ThemeProvider theme={theme}>
       <Router>
         <AppContainer>
           <Navbar />
+          <ModalRoot />
           <Wrapper>
             <Routes>
               <Route path="/" element={<LandingPage />} />
